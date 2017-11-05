@@ -27,3 +27,6 @@
   * `DocumentRoot "/srv/http"` - umiestnenie webovych stránok
   * `ErrorLog "/var/log/httpd/error_log"` - umiestnenie súboru s logmi chýb
   * `LogLevel warn` - nastavenie levelo logovania
+
+* restart apache servera
+> systemctl restart http
