@@ -2,10 +2,6 @@
 ## (2017/2018)
 
 
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
+* Zadanie č. 1 (Hardering NAT routra, DHCP a SSH servera)
+* Zadanie č. 2 (Hardering Web servera)
+* Prezentácia sieťovej služieb - Squid 
