@@ -1,6 +1,8 @@
 # Hardering Web servera
 
-Pri tvorbe tohoto návodu som použil [raspberry pi zero](https://www.raspberrypi.org/products/raspberry-pi-zero/), na ktorom bežal [Arch Linux](https://archlinuxarm.org/platforms/armv6/raspberry-pi).
+* pri tvorbe tohoto návodu som použil [raspberry pi zero](https://www.raspberrypi.org/products/raspberry-pi-zero/)
+* použitá linuxová distribúcia bola [Arch Linux](https://archlinuxarm.org/platforms/armv6/raspberry-pi)
+* pi zero sa nachádzalo v lokálnej sieti na adrese 192.168.1.115 a konfiguroval som cez SSH nastavené v predchádzajúcom návode
 
 ## Cieľ:
 * Fungujúci Wordpress
@@ -13,11 +15,4 @@ Pri tvorbe tohoto návodu som použil [raspberry pi zero](https://www.raspberryp
 
 ## 1. Inštálácia a nastavenie Apache servera
 * nainštalujme balík apache:
-
-As Kanye West said:
-
-> We're living the future so
-> the present is our past.
-
-I think you should use an
-`<addr>` element here instead.
+> sudo pacman -S apache
