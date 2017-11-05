@@ -16,3 +16,14 @@
 ## 1. Inštálácia a nastavenie Apache servera
 * nainštalujme balík apache:
 > sudo pacman -S apache
+
+* spustíme apache server príkazom:
+> sudo systemctl start httpd
+
+* hlavný konfiguračný súbor je `/etc/httpd/conf/httpd.conf`, zaujímavé časti:
+  * `Listen 80` - nastavenie na akom porte bude Apache počúvať
+  * `User http`, `Group http` - pri prvom spusteni httpd je vytvorený používateľ a skupina http
+  * `ServerAdmin you@example.com` - emailová adresa zobrazovaná na chybovych stránkach
+  * `DocumentRoot "/srv/http"` - umiestnenie webovych stránok
+  * `ErrorLog "/var/log/httpd/error_log"` - umiestnenie súboru s logmi chýb
+  * `LogLevel warn` - nastavenie levelo logovania
