@@ -37,10 +37,10 @@
 * do hlavného konfiguračného súboru `/etc/httpd/conf/httpd.conf` je možné pridávať ďalšie nastavenia uložene v iných súboroch, ktoré treba zapísať pomocou `Include conf/extra/nazovKonfiguracnehoSuboru.conf` kde `nazovKonfiguracnehoSuboru.conf` je pridávaný konfiguračný súbor
     
 ### Používateľské priečinky, alebo web pre každého používateľa 
-* príklad https://thesis.science.upjs.sk/~rstana/
-* takéto niečo vieme vytvoriť odkolentovaním Include 
+* príklad https://thesis.science.upjs.sk/~rstana/
+* takéto niečo vieme vytvoriť odkolentovaním 
 
->conf/extra/httpd-userdir.conf 
+>Include conf/extra/httpd-userdir.conf 
 
 v `/etc/httpd/conf/httpd.conf`, čím sa na adrese `webovyserver.com/~menoPouzivatela` zobrazi obsah uložený v zložke `~/public_html` každého používateľa
 * pre správne fungovanie musia byť nastavené oprávnenia tak, aby apache vedel čítať zložku `~/public_html`, čo urobíme pomocou:
