@@ -126,11 +126,11 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 
 * asd
 
->
-Alias / "/srv/http/wordpress/wordpress/"
-<Directory "/srv/http/wordpress/wordpress/">
-        AllowOverride All
-        Options FollowSymlinks
-        Require all granted
-</Directory>
-<
+
+> Alias / "/srv/http/wordpress/wordpress/"
+> <Directory "/srv/http/wordpress/wordpress/">
+>         AllowOverride All
+>         Options FollowSymlinks
+>         Require all granted
+> </Directory>
+
