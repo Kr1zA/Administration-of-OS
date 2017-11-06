@@ -40,8 +40,9 @@
 * príklad https://thesis.science.upjs.sk/~rstana/
 * takéto niečo vieme vytvoriť odkolentovaním Include `conf/extra/httpd-userdir.conf` v `/etc/httpd/conf/httpd.conf`, čím sa na adrese webovyserver.com/~menoPouzivatela zobrazi obsah uložený v zložke `~/public_html` každého používateľa
 * pre správne fungovanie musia byť nastavené oprávnenia tak, aby apache vedel čítať zložku `~/public_html`, čo urobíme pomocou:
-> chmod o+x ~
 
-> chmod o+x ~/public_html
+>chmod o+x ~
 
-> chmod -R o+r ~/public_html
+>chmod o+x ~/public_html
+
+>chmod -R o+r ~/public_html
