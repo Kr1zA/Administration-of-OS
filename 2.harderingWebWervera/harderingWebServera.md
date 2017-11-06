@@ -46,3 +46,12 @@
 >chmod o+x ~/public_html
 
 >chmod -R o+r ~/public_html
+
+## 2. PHP
+* najprv nainštalujeme HPP pomocou:
+> sudo pacman -S php php-apache
+* v `/etc/httpd/conf/httpd.conf` zakomentujeme 
+> #LoadModule mpm_event_module modules/mod_mpm_event.so 
+a odkomentujeme 
+> LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+
