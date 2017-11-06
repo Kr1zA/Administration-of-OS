@@ -124,13 +124,18 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 
 >sudo vim /etc/httpd/conf/extra/httpd-wordpress.conf
 
-* asd
+* vložíme doňho nasledovné:
 
 
 > Alias / "/srv/http/wordpress/wordpress/"
+
 > <Directory "/srv/http/wordpress/wordpress/">
+
 >         AllowOverride All
+
 >         Options FollowSymlinks
+
 >         Require all granted
+
 > </Directory>
 
