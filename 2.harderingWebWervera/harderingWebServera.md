@@ -20,21 +20,20 @@
 * spustíme apache server príkazom:
 > sudo systemctl start httpd
 
-
 * restart apache servera
 > systemctl restart http
 
 * príkaz pre otestovanie správnosti nastaveni:
 > apachectl configtest
 
-* hlavný konfiguračný súbor je `/etc/httpd/conf/httpd.conf`, zaujímavé časti:
+Hlavný konfiguračný súbor je `/etc/httpd/conf/httpd.conf`, zaujímavé časti:
   * `Listen 80` - nastavenie na akom porte bude Apache počúvať
   * `User http`, `Group http` - pri prvom spusteni httpd je vytvorený používateľ a skupina http
   * `ServerAdmin you@example.com` - emailová adresa zobrazovaná na chybovych stránkach
   * `DocumentRoot "/srv/http"` - umiestnenie webovych stránok
   * `ErrorLog "/var/log/httpd/error_log"` - umiestnenie súboru s logmi chýb
   * `LogLevel warn` - nastavenie [levelu logovania](https://httpd.apache.org/docs/2.4/mod/core.html#loglevel)
-* do hlavného konfiguračného súboru `/etc/httpd/conf/httpd.conf` je možné pridávať ďalšie nastavenia uložene v iných súboroch, ktoré treba zapísať pomocou `Include conf/extra/nazovKonfiguracnehoSuboru.conf` kde `nazovKonfiguracnehoSuboru.conf` je pridávaný konfiguračný súbor
+Do hlavného konfiguračného súboru `/etc/httpd/conf/httpd.conf` je možné pridávať ďalšie nastavenia uložene v iných súboroch, ktoré treba zapísať pomocou `Include conf/extra/nazovKonfiguracnehoSuboru.conf` kde `nazovKonfiguracnehoSuboru.conf` je pridávaný konfiguračný súbor
     
 ### Používateľské priečinky, alebo web pre každého používateľa 
 * príklad https://thesis.science.upjs.sk/~rstana/
@@ -51,6 +50,8 @@ v `/etc/httpd/conf/httpd.conf`, čím sa na adrese `webovyserver.com/~menoPouziv
 
 >chmod -R o+r ~/public_html
 
+* pre aplikovanie zmien reŠtartujeme apache server
+
 ## 2. PHP
 * najprv nainštalujeme HPP pomocou:
 > sudo pacman -S php php-apache
@@ -61,3 +62,42 @@ a odkomentujeme
 
 > LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 
+* Aby sme sfunkčnili PHP pridáme do `/etc/httpd/conf/httpd.conf` na koniec listu `LoadModule` tieto riadky:
+
+>LoadModule php7_module modules/libphp7.so
+
+>AddHandler php7-script .php
+
+a na koniec `Include` listu riadok:
+
+>Include conf/extra/php7_module.conf
+
+* pre aplikovanie zmien reštartujeme apache server
+
+## 3. MySQL
+
+* nainštalujeme balík mariadb (MariaDB je defaultná implementácia MySQL pre Arch Linux): 
+
+> sudo pacman -S mariadb
+
+* pred spustením servisu spustíme nasledujúci príkaz:
+
+> sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+
+* spustíme MySQL príkazom:
+
+> sudo systemctl start mariadb
+
+* aby sa MySQL spúšťal pri štarte:
+
+> sudo systemctl enabe mariadb
+
+* nasledujúcim príkazom interaktívne nastavíme zabezpecenie databázy:
+
+> sudo mysql_secure_installation
+
+## 4. Wordpress
+
+Máme nainštalované a základne nastavené všetky potrebné veci pre Wordpress, môžeme ho nainštalovať pikazom `sudo pacman -S wordpress`, čo ale robiť nebudeme. Kôli zložitému nastavovaniu oprávnení a kôli tomu, že wordpress má vlastný manažment aktualizácií ho nainštalujeme ručne.
+
+* stiahneme
