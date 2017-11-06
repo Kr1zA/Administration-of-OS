@@ -38,7 +38,11 @@
     
 ### Používateľské priečinky, alebo web pre každého používateľa 
 * príklad https://thesis.science.upjs.sk/~rstana/
-* takéto niečo vieme vytvoriť odkolentovaním Include `conf/extra/httpd-userdir.conf` v `/etc/httpd/conf/httpd.conf`, čím sa na adrese webovyserver.com/~menoPouzivatela zobrazi obsah uložený v zložke `~/public_html` každého používateľa
+* takéto niečo vieme vytvoriť odkolentovaním Include 
+
+>conf/extra/httpd-userdir.conf 
+
+v `/etc/httpd/conf/httpd.conf`, čím sa na adrese `webovyserver.com/~menoPouzivatela` zobrazi obsah uložený v zložke `~/public_html` každého používateľa
 * pre správne fungovanie musia byť nastavené oprávnenia tak, aby apache vedel čítať zložku `~/public_html`, čo urobíme pomocou:
 
 >chmod o+x ~
@@ -52,6 +56,8 @@
 > sudo pacman -S php php-apache
 * v `/etc/httpd/conf/httpd.conf` zakomentujeme 
 > #LoadModule mpm_event_module modules/mod_mpm_event.so 
+
 a odkomentujeme 
+
 > LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 
