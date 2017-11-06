@@ -2,7 +2,7 @@
 
 * pri tvorbe tohoto návodu som použil [raspberry pi zero](https://www.raspberrypi.org/products/raspberry-pi-zero/)
 * použitá linuxová distribúcia bola [Arch Linux](https://archlinuxarm.org/platforms/armv6/raspberry-pi)
-* pi zero sa nachádzalo v lokálnej sieti na adrese 192.168.1.115 a konfiguroval som cez SSH nastavené v predchádzajúcom návode
+* pi zero sa nachádzalo v lokálnej sieti na adrese 192.168.1.115 a konfiguroval som cez SSH nastavené v predchádzajúcom návode, pri úpravách konfiguračných súborov používam editor vim (môžete používať ľubovoľný editor napr. nano)
 
 ## Cieľ:
 * Fungujúci Wordpress
@@ -15,15 +15,19 @@
 
 ## 1. Inštálácia a nastavenie Apache servera
 * nainštalujme balík apache:
+
 > sudo pacman -S apache
 
 * spustíme apache server príkazom:
+
 > sudo systemctl start httpd
 
-* restart apache servera
+* restart apache servera:
+
 > systemctl restart http
 
 * príkaz pre otestovanie správnosti nastaveni:
+
 > apachectl configtest
 
 Hlavný konfiguračný súbor je `/etc/httpd/conf/httpd.conf`, zaujímavé časti:
@@ -37,11 +41,12 @@ Do hlavného konfiguračného súboru `/etc/httpd/conf/httpd.conf` je možné pr
     
 ### Používateľské priečinky, alebo web pre každého používateľa 
 * príklad https://thesis.science.upjs.sk/~rstana/
-* takéto niečo vieme vytvoriť odkolentovaním 
+* takéto niečo vieme vytvoriť odkomentovaním 
 
 >Include conf/extra/httpd-userdir.conf 
 
 v `/etc/httpd/conf/httpd.conf`, čím sa na adrese `webovyserver.com/~menoPouzivatela` zobrazi obsah uložený v zložke `~/public_html` každého používateľa
+
 * pre správne fungovanie musia byť nastavené oprávnenia tak, aby apache vedel čítať zložku `~/public_html`, čo urobíme pomocou:
 
 >chmod o+x ~
@@ -50,12 +55,19 @@ v `/etc/httpd/conf/httpd.conf`, čím sa na adrese `webovyserver.com/~menoPouziv
 
 >chmod -R o+r ~/public_html
 
-* pre aplikovanie zmien reŠtartujeme apache server
+* pre aplikovanie zmien reštartujeme apache server
+
+Teraz môžeme vyskúšat funkčnosť apache servera tým, že do webového prehliadača zadáme adresu 192.168.1.115. ak je vsetko v poriadku, malo by nám zobraziť stránku apache servera bežiaceho na pi zere. V prípade problémov môžme skontrolovať nastavenie apache servera príkazom:
+
+> apachectl configtest
 
 ## 2. PHP
 * najprv nainštalujeme HPP pomocou:
+
 > sudo pacman -S php php-apache
+
 * v `/etc/httpd/conf/httpd.conf` zakomentujeme 
+
 > #LoadModule mpm_event_module modules/mod_mpm_event.so 
 
 a odkomentujeme 
@@ -98,6 +110,27 @@ a na koniec `Include` listu riadok:
 
 ## 4. Wordpress
 
-Máme nainštalované a základne nastavené všetky potrebné veci pre Wordpress, môžeme ho nainštalovať pikazom `sudo pacman -S wordpress`, čo ale robiť nebudeme. Kôli zložitému nastavovaniu oprávnení a kôli tomu, že wordpress má vlastný manažment aktualizácií ho nainštalujeme ručne.
+Máme nainštalované a základne nastavené všetky potrebné veci pre Wordpress, môžeme ho nainštalovať pikazom `sudo pacman -S wordpress`, čo ale robiť nebudeme. Kôli zložitému nastavovaniu oprávnení a kôli tomu, že WordPress má vlastný manažment aktualizácií ho nainštalujeme ručne.
 
-* stiahneme
+Zo stránky wordpress.org stiahneme a rozbalíme poslednú verziu WordPressu:
+
+>cd /srv/http
+>sudo wget https://wordpress.org/latest.tar.gz
+>sudo tar xvzf latest.tar.gz
+
+Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPress nainštalovaný:
+
+* vytvoríme konfiguracný súbor:
+
+>sudo vim /etc/httpd/conf/extra/httpd-wordpress.conf
+
+* asd
+
+`
+Alias / "/srv/http/wordpress/wordpress/"
+<Directory "/srv/http/wordpress/wordpress/">
+        AllowOverride All
+        Options FollowSymlinks
+        Require all granted
+</Directory>
+`
