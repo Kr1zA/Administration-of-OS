@@ -127,19 +127,16 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 * vložíme doňho nasledovné:
 
 
-> Alias / "/srv/http/wordpress/wordpress/"
+``` 
+Alias / "/srv/http/wordpress/wordpress/"
 
-> <Directory "/srv/http/wordpress/wordpress/">
+<Directory "/srv/http/wordpress/wordpress/">
+         AllowOverride All
+         Options FollowSymlinks
+         Require all granted
+</Directory>
 
->         AllowOverride All
-
->         Options FollowSymlinks
-
->         Require all granted
-
-> </Directory>
-
-
+```
 ## 5. Bonus Https, SSL...
 
 Pre povolenie SSL odkomenrujeme v '/etc/httpd/conf/httpd.conf' nasledujúce riadky:
