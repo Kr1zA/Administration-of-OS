@@ -145,7 +145,9 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 Pre povolenie SSL odkomenrujeme v '/etc/httpd/conf/httpd.conf' nasledujúce riadky:
 
 >LoadModule ssl_module modules/mod_ssl.so
+
 >LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+
 >Include conf/extra/httpd-ssl.conf
 
 Ak chceme zabezpečené pripojenie cez https a SSL budeme potrebovať certifikát. Môžeme si podpísať vlastnou certifikačnou autoritou sami ale webový prehliadač bude papuľovať. Necháme si teda certifikát vygenerovať certifikačnou autoritou [Let’s Encrypt](https://letsencrypt.org/). Na to budeme potrebovať oficiálneho klienta s názvom Certbot, ktorý nám vygeneruje certifikát a vŠetko potrebná nastaví. Nainštalujeme ho pomocou:
