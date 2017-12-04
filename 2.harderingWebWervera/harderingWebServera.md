@@ -62,7 +62,7 @@ Teraz môžeme vyskúšat funkčnosť apache servera tým, že do webového preh
 > apachectl configtest
 
 ## 2. PHP
-* najprv nainštalujeme HPP pomocou:
+* najprv nainštalujeme PHP pomocou:
 
 > sudo pacman -S php php-apache
 
@@ -108,7 +108,9 @@ a na koniec `Include` listu riadok:
 
 > sudo mysql_secure_installation
 
+
 ## 4. Wordpress
+
 
 Máme nainštalované a základne nastavené všetky potrebné veci pre Wordpress, môžeme ho nainštalovať pikazom `sudo pacman -S wordpress`, čo ale robiť nebudeme. Kôli zložitému nastavovaniu oprávnení a kôli tomu, že WordPress má vlastný manažment aktualizácií ho nainštalujeme ručne.
 
@@ -138,4 +140,7 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 >         Require all granted
 
 > </Directory>
+
+
+
 
