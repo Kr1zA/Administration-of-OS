@@ -108,9 +108,7 @@ a na koniec `Include` listu riadok:
 
 > sudo mysql_secure_installation
 
-
-## 4. Wordpress
-
+## 4. Wordpress
 
 Máme nainštalované a základne nastavené všetky potrebné veci pre Wordpress, môžeme ho nainštalovať pikazom `sudo pacman -S wordpress`, čo ale robiť nebudeme. Kôli zložitému nastavovaniu oprávnení a kôli tomu, že WordPress má vlastný manažment aktualizácií ho nainštalujeme ručne.
 
@@ -142,5 +140,28 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 > </Directory>
 
 
+## 5. Bonus Https, SSL...
 
+Pre povolenie SSL odkomenrujeme v '/etc/httpd/conf/httpd.conf' nasledujúce riadky:
 
+>LoadModule ssl_module modules/mod_ssl.so
+>LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+>Include conf/extra/httpd-ssl.conf
+
+Ak chceme zabezpečené pripojenie cez https a SSL budeme potrebovať certifikát. Môžeme si podpísať vlastnou certifikačnou autoritou sami ale webový prehliadač bude papuľovať. Necháme si teda certifikát vygenerovať certifikačnou autoritou [Let’s Encrypt](https://letsencrypt.org/). Na to budeme potrebovať oficiálneho klienta s názvom Certbot, ktorý nám vygeneruje certifikát a vŠetko potrebná nastaví. Nainštalujeme ho pomocou:
+
+> sudo pacman -S certboot
+
+Následne ešte povolíme rewrite_module odkomentovaním nasledúceho riadka v '/etc/httpd/conf/httpd.conf' aby certbot nevypísal chybu a mohol presmerovat http na https:
+
+> LoadModule rewrite_module modules/mod_rewrite.so 
+
+Certbot spustíme príkazom:
+
+> sudo certbot --apache
+
+Certbot sa nás spýta pre ktorý web chceme aktivovať HTTPS. Zvolíme číslo a stlačime enter. Následne Certbot získa certifikát a verifikuje nastavenie servera. Potom sa už len spýta, či má presmerovať HTTP na HTTPS a tým je hotovo. Náš web je zabezpečený.
+
+Keďže certifikát má určitú platnosť, niekedy je potrebné ho obnoviť. To mǒžeme urobiť príkazom:
+
+> sudo certbot renew
