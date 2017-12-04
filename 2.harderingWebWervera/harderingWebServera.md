@@ -126,32 +126,44 @@ Potrebujeme vytvoriť konfiguračný súbor pre apache, aby vedel, kde je WordPr
 
 * vložíme doňho nasledovné:
 
-
 ``` 
 Alias / "/srv/http/wordpress/wordpress/"
-
 <Directory "/srv/http/wordpress/wordpress/">
          AllowOverride All
          Options FollowSymlinks
          Require all granted
 </Directory>
+```
+
+V súbore `/etc/httpd/conf/vhosts/wordpress.dom` zmeníme riadky `ServerAdmin`, `ServerName` a `ServerAlias` tak aby prislúchali nášmu serveru:
 
 ```
+ServerAdmin richard.stana@gmail.com
+ServerName kriza.hopto.org
+ServerAlias kriza.hopto.org
+```
+
+Do Include `conf/extra/httpd-wordpress.conf` vložíme nasledujúci riadok:
+
+> Include conf/extra/httpd-wordpress.conf
+
+Ostáva už len reštartovať Apache server:
+
+> systemctl restart http
+
 ## 5. Bonus Https, SSL...
 
 Pre povolenie SSL odkomenrujeme v '/etc/httpd/conf/httpd.conf' nasledujúce riadky:
-
->LoadModule ssl_module modules/mod_ssl.so
-
->LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
-
->Include conf/extra/httpd-ssl.conf
-
+```
+LoadModule ssl_module modules/mod_ssl.so
+LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+Include conf/extra/httpd-ssl.conf
+```
 Ak chceme zabezpečené pripojenie cez https a SSL budeme potrebovať certifikát. Môžeme si podpísať vlastnou certifikačnou autoritou sami ale webový prehliadač bude papuľovať. Necháme si teda certifikát vygenerovať certifikačnou autoritou [Let’s Encrypt](https://letsencrypt.org/). Na to budeme potrebovať oficiálneho klienta s názvom Certbot, ktorý nám vygeneruje certifikát a vŠetko potrebná nastaví. Nainštalujeme ho pomocou:
 
 > sudo pacman -S certboot
 
-Následne ešte povolíme rewrite_module odkomentovaním nasledúceho riadka v '/etc/httpd/conf/httpd.conf' aby certbot nevypísal chybu a mohol presmerovat http na https:
+Následne ešte povolíme rewrite_module odkomentovaním nasledúceho riadka v `/etc/httpd/conf/httpd.conf` aby certbot nevypísal chybu a mohol presmerovat http na https:
 
 > LoadModule rewrite_module modules/mod_rewrite.so 
 
