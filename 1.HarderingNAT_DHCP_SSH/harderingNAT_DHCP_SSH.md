@@ -6,19 +6,12 @@ SSH server získame nainstalovaním balíka `openssh`. Štandardne je však v di
 
 ### Konfigurácia
 
-
-
-Hlavný konfiguračný súbor je `/etc/ssh/sshd_config`. 
-
-Pre povolenie pripojenia len niektorých užívateľov pridáme riadok:
-
->AllowUsers    user1 user2
-
-Pre povolenie pripojenia len niektorých skupín pridáme riadok:
-
->AllowGroups   group1 group2
-
-Peknú uvítaciu správu pri prihlasovaní vieme zobrazit zmenou riadka `#Banner none` na `Banner /etc/issue`, kde `/etc/issue` je súbor peknou uvítacou správou.
-
-Defaultný port 22 na ktorom počúva SSH, môžeme zmeniť riadkom `Port 8181`.
-
+Hlavný konfiguračný súbor je `/etc/ssh/sshd_config`, doležité riadky:
+  * `AllowUsers    user1 user2`, povolenie pripojenia len niektorých užívateľov
+  * `AllowGroups   group1 group2`, povolenie pripojenia len niektorých skupín
+  * `Banner /etc/issue`, pekná uvítacia správa uložená v `/etc/issue`, ktorá sa zobrazí pri prihlasovaní 
+  * `Port 8181`, zmena defaultného portu z 22 na 8181
+  * `PasswordAuthentication no`, zakázanie prihlasovania heslom (nutnosť mať nakopírovaný verejný kľúč v súbore ~/.ssh/authorized_keys)
+  * `PermitRootLogin no` zmenou z `#PermitRootLogin prohibit-password` zakážeme prihlásenie ako root
+  
+SSH vieme zapnúť/vypnúť/reštartovať pomocou príkazu `sudo systemctl enable/disable/restart sshd`.
