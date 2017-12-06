@@ -77,7 +77,9 @@ Ale toto nastavenie ostáva len do reštartovania. Automatické nastavenie po re
 
 * Aby sa táto uložená konfigurácia načítala po reštarte pridáme do `/etc/network/interfaces` hneď pod riadok `iface lo inet loopback` nasledovný riadok:
 
->pre-up iptables-restore < /etc/iptables.rules
+> pre-up iptables-restore < /etc/iptables.rules
+
+
 
 ## 2. Hardering DHCP servera
 
@@ -93,7 +95,33 @@ Zapnutie/vypnutie/reštartovanie DHCP servera vieme urobiť príkazom:
 
 Po inštalácia sa DHCP server automaticky spustí, spustenie dhcp ale bude neúspešné. Dǒvodom je zlé konfigurácia. Potrebujeme nastaviť na ktorom rozhraní bude fungovať DHCP server. Urobíme to pridaním riadka `INTERFACES="eth0s8"` v súbore `/etc/default/isc-dhcp-server`. Ak sa predtým nachádzajú iné nastavenia `INTERFACESv4` alebo `INTERFACESv6` zakomentujeme ich. Ak chceme aby DHCP fungovalao na viacerých rozhraniach odvelíme ich medzerou, napr.: `INTERFACES="eth0s8 eth0s9"`.
 
-DHCP stále nepôjde spustiť. Potrebujeme ešte deklarovať podsieť 
+DHCP stále nepôjde spustiť. Potrebujeme ešte deklarovať podsieť. Urobíme to v konfiguračnom súbore `/etc/dhcp/dhcpd.conf` pridaním nasledovných riadkov na koniec súboru:
+
+```
+subnet 192.168.1.0 netmask 255.255.255.0 {
+	range 192.168.1.2 192.168.1.100; #nastavienie rozsahu pridelovanych, zaciname od 192.168.1.2 lebo 192.168.1.1 je brana
+	option routers 192.168.1.1; #adresa routra
+	option subnet-mask 255.255.255.0; #maska podsiete
+	option broadcast-address 192.168.1.255; #broadcastova adresa
+}
+```
+Takýmto nastavením budú pripojeným zariadeniam priraďované adresy z rozsahu 192.168.1.2 až 192.168.1.100. Ak chceme niektorému zariadeniu priradiť pevnú ip adresu (napríklad tlačiarni) pridáme do časti subnet na pridáme:
+
+```
+host laser-printer-lex1 {
+	hardware ethernet 08:00:2b:4c:a3:82; #konkretna MAC adresa tlaciarne
+        fixed-address 192.168.1.120; #priradena pevna adresa
+}
+```
+
+V danom súbore môžeme ešte nastaviť:
+
+* `option domain-name "kriza.org"`, nastavenie doménoveho mena v mojom prípade na kriza.org
+* `option domain-name-servers 8.8.8.8;` nastavenie DNS serverna v mojom prípade googlovský 
+* `max-lease-time 600`, nastavenie ako dlho budeme držat IP pre klientskú stanicu
+* `authoritative`, nastavenie, že by sme mali byť oficialny/jediný DHCP server v tejto sieti
+
+
 
 ## 3. Hardering SSH servera
 
