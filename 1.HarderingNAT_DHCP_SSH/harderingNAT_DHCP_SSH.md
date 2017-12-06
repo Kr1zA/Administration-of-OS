@@ -71,11 +71,11 @@ Ak sme náhodou ničo urobili zle vieme nastavenie zahodit príkazom `iptables -
 
 Ale toto nastavenie ostáva len do reštartovania. Automatické nastavenie po reštarte vieme nastavit nasledovne:
 
-*Aktuálnu konfiguráciu iptables si uložíme do súboru `/etc/iptables.rules` príkazom: 
+* Aktuálnu konfiguráciu iptables si uložíme do súboru `/etc/iptables.rules` príkazom: 
 
 > iptables-save > /etc/iptables.rules
 
-*Aby sa táto uložená konfigurácia načítala po reštarte pridáme do `/etc/network/interfaces` hneď pod riadok `iface lo inet loopback` nasledovný riadok:
+* Aby sa táto uložená konfigurácia načítala po reštarte pridáme do `/etc/network/interfaces` hneď pod riadok `iface lo inet loopback` nasledovný riadok:
 
 >pre-up iptables-restore < /etc/iptables.rules
 
