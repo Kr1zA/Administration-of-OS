@@ -79,11 +79,9 @@ Ale toto nastavenie ostáva len do reštartovania. Automatické nastavenie po re
 
 > pre-up iptables-restore < /etc/iptables.rules
 
-
-
 ## 2. Hardering DHCP servera
 
-Momentálne máme nastavené pripojenie klienta k serveru nastavením pevnej IP adresy na klientovi. Funguje to ale je to nepraktické, ak sa často pripája a odpája zo siete veľa klientov. Poďme teda nastaviť DHCP, ktoré priradí pripojeným klientom IP adresy automaticky.
+Momentálne máme nastavené pripojenie klienta k serveru nastavením pevnej IP adresy na klientovi. Funguje to ale je to nepraktické, ak sa často pripája a odpája zo siete veľa klientov. Poďme teda nastaviť DHCP server, ktorý priradí pripojeným klientom IP adresy automaticky.
 
 Najprv nainštalujeme dhcp príkazom:
 
