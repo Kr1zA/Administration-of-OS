@@ -125,13 +125,20 @@ Ak chceme zistiť, ktoré IP adresy sú priradené, zistíme to príkazom:
 
 > cat /var/lib/dhcp/dhcpd.leases
 
+Ak chceme zobraziť priradené IP adresy použijeme príkaz:
+
+> cat /var/lib/dhcp/dhcpd.leases
+
+Chybové hlášky DHCP servera vieme vypísať príkazom:
+
+> tail /var/log/syslog
+
 Máme nastavený DHCP server. Ale na klientovi máme nastavenú statickú IP adresu. Ak chceme aby klient dostával IP adresu od DHCP servera musím vrátiť nastavenie v súbore /etc/network/interfaces na pôvodné:
 
 ```
 auto enp0s3
 iface enp0s3 inet dhcp
 ```
-
 
 ## 3. Hardering SSH servera
 
