@@ -119,10 +119,6 @@ V danom súbore môžeme ešte nastaviť:
 * `max-lease-time 600`, nastavenie ako dlho budeme držat IP pre klientskú stanicu
 * `authoritative`, nastavenie, že by sme mali byť oficialny/jediný DHCP server v tejto sieti
 
-Ak chceme zistiť, ktoré IP adresy sú priradené, zistíme to príkazom:
-
-> cat /var/lib/dhcp/dhcpd.leases
-
 Ak chceme zobraziť priradené IP adresy použijeme príkaz:
 
 > cat /var/lib/dhcp/dhcpd.leases
