@@ -81,7 +81,19 @@ Ale toto nastavenie ostáva len do reštartovania. Automatické nastavenie po re
 
 ## 2. Hardering DHCP servera
 
-Momentálne máme nastavené pripojenie klienta k serveru nastavením pevnej IP adresy na klientovi. Funguje to ale je to nepraktické, ak sa často pripája a odpája zo siete veľa klientov. Poďme teda nastaviť DHCP, 
+Momentálne máme nastavené pripojenie klienta k serveru nastavením pevnej IP adresy na klientovi. Funguje to ale je to nepraktické, ak sa často pripája a odpája zo siete veľa klientov. Poďme teda nastaviť DHCP, ktoré priradí pripojeným klientom IP adresy automaticky.
+
+Najprv nainštalujeme dhcp príkazom:
+
+> apt-get install isc-dhcp-server
+
+Zapnutie/vypnutie/reštartovanie DHCP servera vieme urobiť príkazom:
+
+> service isc-dhcp-server start/stop/restart
+
+Po inštalácia sa DHCP server automaticky spustí, spustenie dhcp ale bude neúspešné. Dǒvodom je zlé konfigurácia. Potrebujeme nastaviť na ktorom rozhraní bude fungovať DHCP server. Urobíme to pridaním riadka `INTERFACES="eth0s8"` v súbore `/etc/default/isc-dhcp-server`. Ak sa predtým nachádzajú iné nastavenia `INTERFACESv4` alebo `INTERFACESv6` zakomentujeme ich. Ak chceme aby DHCP fungovalao na viacerých rozhraniach odvelíme ich medzerou, napr.: `INTERFACES="eth0s8 eth0s9"`.
+
+DHCP stále nepôjde spustiť. Potrebujeme ešte deklarovať podsieť 
 
 ## 3. Hardering SSH servera
 
