@@ -57,12 +57,31 @@ gateway 192.168.1.1
 broadcast 192.168.1.255
 ```
 
-Teraz už vieme komunikovať medzi týmito dvoma strojmi, čo vieme skontrolovať napriklad ningnutím. Problém ale nastane, ak chceme pristupovať na internet. Preto potrebujeme nastaviť na bráne smerovanie. To vieme dočastne (do najbližsieho reštartu) urobiť príkazom `sysctl -w net.ipv4.ip_forward=1`. Pre trvalé zapnutie smerovania je potrebné 
+Teraz už vieme komunikovať medzi týmito dvoma strojmi, čo vieme skontrolovať napriklad ningnutím. Problém ale nastane, ak chceme pristupovať na internet. Preto potrebujeme nastaviť na bráne smerovanie. To vieme dočastne (do najbližsieho reštartu) urobiť príkazom `sysctl -w net.ipv4.ip_forward=1`. Pre trvalé zapnutie smerovania je potrebné pridať na koniec konfiguračného súboru `/etc/systcl.conf` riadok `net.ipv4.ip_forward=1`. Následne aplikujeme nastavenie príkazom `sysctl -p /etc/sysctl.conf`. 
 
+Smerovaciu tabuľku si pre kontorlu vieme zobraziť príkazom `ip route show`.
+
+Síce už máme nastavené smerovanie, na klientovi stále nemáme prístup na internet. Potrebujeme ešte povoliť natovanie. Urobíme to nastavením iptables a to príkazmi:
+
+```
+iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE
+iptables --append FORWARD --in-interface eth1 -j ACCEPT
+```
+Ak sme náhodou ničo urobili zle vieme nastavenie zahodit príkazom `iptables -F`
+
+Ale toto nastavenie ostáva len do reštartovania. Automatické nastavenie po reštarte vieme nastavit nasledovne:
+
+*Aktuálnu konfiguráciu iptables si uložíme do súboru `/etc/iptables.rules` príkazom: 
+
+> iptables-save > /etc/iptables.rules
+
+*Aby sa táto uložená konfigurácia načítala po reštarte pridáme do `/etc/network/interfaces` hneď pod riadok `iface lo inet loopback` nasledovný riadok:
+
+>pre-up iptables-restore < /etc/iptables.rules
 
 ## 2. Hardering DHCP servera
 
-
+Momentálne máme nastavené pripojenie klienta k serveru nastavením pevnej IP adresy na klientovi. Funguje to ale je to nepraktické, ak sa často pripája a odpája zo siete veľa klientov. Poďme teda nastaviť DHCP, 
 
 ## 3. Hardering SSH servera
 
